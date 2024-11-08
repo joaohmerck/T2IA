@@ -112,7 +112,7 @@ class GeneticAlgorithm:
 
     def fitness(self, network, mode):
         score = 0
-        games_to_play = 5  # Jogar várias partidas para uma média de desempenho
+        games_to_play = 15  # Jogar várias partidas para uma média de desempenho
 
         for _ in range(games_to_play):
             result = self.play_game(network, mode)
@@ -172,7 +172,7 @@ class GeneticAlgorithm:
         return child
 
     def mutate(self, network):
-        mutation_rate = 0.05
+        mutation_rate = 0.1
         network.weights_input_hidden += mutation_rate * np.random.uniform(-1, 1, network.weights_input_hidden.shape)
         network.weights_hidden_output += mutation_rate * np.random.uniform(-1, 1, network.weights_hidden_output.shape)
 
@@ -278,7 +278,7 @@ if __name__ == "__main__":
     minimax_trainer = MinimaxTrainer()
     population_size = 10
     input_size = 9
-    hidden_size = 5
+    hidden_size = 9
     output_size = 9
 
     # Menu de opções
