@@ -80,9 +80,22 @@ class MinimaxTrainer:
             return best_score
 
     def choose_move(self, board, mode):
-        if mode == 'hard':
+        if mode == 'easy':
+            # 25% de chance de usar o Minimax
+            if random.random() < 0.25:
+                return self.best_move(board)
+            else:
+                return random.choice([i for i, x in enumerate(board) if x == 0])
+        elif mode == 'medium':
+            # 50% de chance de usar o Minimax
+            if random.random() < 0.5:
+                return self.best_move(board)
+            else:
+                return random.choice([i for i, x in enumerate(board) if x == 0])
+        elif mode == 'hard':
+            # Sempre usa o Minimax
             return self.best_move(board)
-        return random.choice([i for i, x in enumerate(board) if x == 0])
+
 
     def best_move(self, board):
         best_score = float('-inf')
@@ -142,7 +155,7 @@ class GeneticAlgorithm:
                 score += 10  # Aumentado de 5 para 10 para valorizar mais empates
             else:  # derrota
                 score -= 30  # Aumentado de -10 para -30 para penalizar mais as derrotas
-        return score / num_games  # normaliza o score pelo número de jogos
+        return 5*(score / num_games)  # normaliza o score pelo número de jogos
 
     def play_game(self, network, mode):
         board = [0] * 9
@@ -200,13 +213,14 @@ class GeneticAlgorithm:
         return child
 
     def mutate(self, network):
-        mutation_rate = 0.05  # reduzido para 5%
-        mutation_strength = 0.1  # força da mutação
+        mutation_rate = 0.05  # Probabilidade de mutação
         if random.random() < mutation_rate:
-            network.input_hidden_weights += mutation_strength * np.random.normal(0, 1, network.input_hidden_weights.shape)
-            network.hidden_output_weights += mutation_strength * np.random.normal(0, 1, network.hidden_output_weights.shape)
-            network.hidden_bias += mutation_strength * np.random.normal(0, 1, network.hidden_bias.shape)
-            network.output_bias += mutation_strength * np.random.normal(0, 1, network.output_bias.shape)
+            # Aplica mutação diretamente com valores da distribuição normal padrão
+            network.input_hidden_weights += np.random.normal(0, 1, network.input_hidden_weights.shape)
+            network.hidden_output_weights += np.random.normal(0, 1, network.hidden_output_weights.shape)
+            network.hidden_bias += np.random.normal(0, 1, network.hidden_bias.shape)
+            network.output_bias += np.random.normal(0, 1, network.output_bias.shape)
+
 
 
 # Funções de utilidade
