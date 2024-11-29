@@ -192,7 +192,7 @@ class GeneticAlgorithm:
         move_probabilities = exp_scores / np.sum(exp_scores)
         
         # Reduz a exploração aleatória para focar mais no aprendizado
-        if np.random.random() < 0.05:  # Reduzido de 10% para 5%
+        if np.random.random() < 0.05:  
             return random.choice(possible_moves)
             
         # Escolhe sempre o melhor movimento durante o treinamento
